@@ -1,0 +1,4 @@
+#Sun Nov 05 06:02:48 PST 2023
+base.0=/Users/mac/Desktop/untitled folder 2/practice/build/app/intermediates/dex/debug/mergeDexDebug/classes.dex
+path.0=classes.dex
+renamed.0=classes.dex
