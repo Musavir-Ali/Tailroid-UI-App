@@ -88,7 +88,7 @@ class _DetailPageState extends State<DetailPage> {
                   ),
                 ),
                 Text(
-                  "€12.34",
+                  "10 \$",
                   style: TextStyle(
                     color: Colors.red,
                     fontWeight: FontWeight.bold,
@@ -194,12 +194,17 @@ class _DetailPageState extends State<DetailPage> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               ElevatedButton(
+                style: ElevatedButton.styleFrom(primary: Colors.grey),
                 onPressed: () {
                   // Handle the onPressed event for the first button
                 },
-                child: Text('Contact Seller'),
+                child: Text(
+                  'Contact Seller',
+                  style: TextStyle(color: Colors.black),
+                ),
               ),
               ElevatedButton(
+                style: ElevatedButton.styleFrom(primary: Colors.grey),
                 onPressed: () {
                   // Handle the onPressed event for the second button
                   Navigator.pushReplacement(
@@ -208,11 +213,24 @@ class _DetailPageState extends State<DetailPage> {
                         builder: (context) => CartScreen(),
                       ));
                 },
-                child: Text('Add to Cart'),
+                child: Text(
+                  'Add to Cart',
+                  style: TextStyle(color: Colors.black),
+                ),
               ),
               ElevatedButton(
-                onPressed: () {},
-                child: Text('Buy Now'),
+                style: ElevatedButton.styleFrom(primary: Colors.grey),
+                onPressed: () {
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => CartScreen(),
+                      ));
+                },
+                child: Text(
+                  'Buy Now',
+                  style: TextStyle(color: Colors.black),
+                ),
               ),
             ],
           ),

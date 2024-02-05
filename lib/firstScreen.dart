@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:practice/DetailPage.dart';
+import 'package:practice/cart.dart';
 
 class MyWidget extends StatelessWidget {
   final List<String> images = [
@@ -64,7 +65,12 @@ class MyWidget extends StatelessWidget {
               icon: Icon(Icons.shopping_cart),
               color: Colors.black, // Cart icon
               onPressed: () {
-                // Handle cart icon click
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => CartScreen(),
+                  ),
+                );
               },
             ),
           ),

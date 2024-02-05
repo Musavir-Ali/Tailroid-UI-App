@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:intro_slider/intro_slider.dart';
-import 'package:practice/HomeScreen.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:practice/Login_Screen.dart';
 
 void main() => runApp(MyApp());
 
@@ -14,57 +12,161 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class IntroScreen extends StatelessWidget {
-  List<Slide> slides = [
-    Slide(
-      description: "Jimmy Chuka exploring new spring sweater collection",
-      marginDescription: EdgeInsets.only(top: 270),
-      styleDescription: TextStyle(
-        fontWeight: FontWeight.bold,
-        color: Colors.white,
-        fontSize: 20,
+class IntroScreen extends StatefulWidget {
+  @override
+  _IntroScreenState createState() => _IntroScreenState();
+}
+
+class _IntroScreenState extends State<IntroScreen> {
+  int _currentIndex = 0;
+
+  List<Map<String, dynamic>> slides = [
+    {
+      'title': "Slide 1",
+      'description': "Description for slide 1",
+      'backgroundImage': 'assets/forslider1.jpg',
+      'centerWidget': Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SizedBox(height: 30),
+          Image.asset(
+            "assets/Vector.png",
+            height: 60,
+            width: 60,
+          ),
+          SizedBox(height: 400),
+          Text(
+            "Jimmy Chuka exploring new spring clothing collection",
+            style: TextStyle(
+              fontWeight: FontWeight.normal,
+              color: Colors.white,
+              fontSize: 16,
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ],
       ),
-      centerWidget: Image.asset(
-        "assets/Vector.png",
-        height: 60,
-        width: 60,
+    },
+    {
+      'title': "Slide 2",
+      'description': "Description for slide 2",
+      'backgroundImage': 'assets/forslider2.jpg',
+      'centerWidget': Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          SizedBox(height: 20),
+          Image.asset(
+            "assets/Vector.png",
+            height: 60,
+            width: 60,
+          ),
+          SizedBox(height: 450),
+          Text(
+            "Welcome to Tailroid",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 26,
+              color: Colors.black,
+            ),
+          ),
+        ],
       ),
-      backgroundImage: ('assets/philip-martin-5aGUyCW_PJw-unsplash.jpg'),
-      backgroundImageFit: BoxFit.cover,
-    ),
-    Slide(
-        title: "Tailroid",
-        styleTitle: const TextStyle(fontSize: 30),
-        centerWidget: Image.asset(
-          "assets/Vector.png",
-          height: 60,
-          width: 60,
-        ),
-        backgroundImage: ('assets/ayo-ogunseinde-6W4F62sN_yI-unsplash.jpg'),
-        backgroundImageFit: BoxFit.fill),
+    },
   ];
 
   @override
   Widget build(BuildContext context) {
-    return IntroSlider(
-      colorDot: Colors.white,
-      slides: slides,
-      onDonePress: () {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => HomeScreen(),
+    return Scaffold(
+      body: Stack(
+        children: [
+          PageView.builder(
+            itemCount: slides.length,
+            onPageChanged: (index) {
+              setState(() {
+                _currentIndex = index;
+              });
+            },
+            itemBuilder: (context, index) {
+              return Container(
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage(slides[index]['backgroundImage']),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                child: Center(
+                  child: slides[index]['centerWidget'],
+                ),
+              );
+            },
           ),
-        );
-      },
-      onSkipPress: () {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => HomeScreen(),
+          Positioned(
+            bottom: 20,
+            left: 0,
+            right: 0,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: List.generate(
+                slides.length,
+                (index) => Container(
+                  margin: EdgeInsets.symmetric(horizontal: 5.0),
+                  width: 10.0,
+                  height: 10.0,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: _currentIndex == index ? Colors.blue : Colors.grey,
+                  ),
+                ),
+              ),
+            ),
           ),
-        );
-      },
+          Positioned(
+            bottom: 50,
+            left: 20,
+            right: 20,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => LoginScreen(),
+                      ),
+                    );
+                  },
+                  child: Text(
+                    'Skip',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    if (_currentIndex == slides.length - 1) {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => LoginScreen(),
+                        ),
+                      );
+                    } else {
+                      setState(() {
+                        _currentIndex++;
+                      });
+                    }
+                  },
+                  child: Text(
+                    _currentIndex == slides.length - 1 ? 'Finish' : 'Next',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

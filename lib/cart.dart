@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:practice/payment.dart';
 
 class CartScreen extends StatefulWidget {
   @override
@@ -14,26 +15,29 @@ class _CartScreenState extends State<CartScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'My Cart',
-          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+        backgroundColor: Colors.grey,
+        elevation: 8,
+        iconTheme: (IconThemeData(color: Colors.black)),
+        title: const Row(
+          children: [
+            Text(
+              "Cart",
+              style:
+                  TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+            ),
+          ],
         ),
       ),
-      body: ListView.builder(
-        itemCount: cartItems.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(cartItems[index]),
-            trailing: IconButton(
-              icon: Icon(Icons.remove_circle),
-              onPressed: () {
-                setState(() {
-                  cartItems.removeAt(index);
-                });
-              },
-            ),
-          );
-        },
+      body: ListTile(
+        title: Text('Long Sleeve Shirt'),
+        trailing: IconButton(
+          icon: Icon(Icons.remove_shopping_cart),
+          onPressed: () {
+            setState(() {
+              Text('Item removed from cart');
+            });
+          },
+        ),
       ),
       bottomNavigationBar: BottomAppBar(
         child: Container(
@@ -47,7 +51,12 @@ class _CartScreenState extends State<CartScreen> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  // Implement checkout functionality
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => CardPaymentPage(),
+                    ),
+                  );
                 },
                 child: Text('Checkout'),
               ),
